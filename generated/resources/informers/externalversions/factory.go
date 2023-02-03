@@ -1,12 +1,9 @@
 /*
 Copyright 2022.
-
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
-
     http://www.apache.org/licenses/LICENSE-2.0
-
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,9 +15,7 @@ limitations under the License.
 package externalversions
 
 import (
-	"os"
 	reflect "reflect"
-	"strings"
 	sync "sync"
 	time "time"
 
@@ -29,7 +24,6 @@ import (
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 
-	"github.com/bentoml/yatai-common/consts"
 	versioned "github.com/bentoml/yatai-image-builder/generated/resources/clientset/versioned"
 	internalinterfaces "github.com/bentoml/yatai-image-builder/generated/resources/informers/externalversions/internalinterfaces"
 	resources "github.com/bentoml/yatai-image-builder/generated/resources/informers/externalversions/resources"
@@ -112,11 +106,6 @@ func NewSharedInformerFactoryWithOptions(client versioned.Interface, defaultResy
 
 // Start initializes all requested informers.
 func (f *sharedInformerFactory) Start(stopCh <-chan struct{}) {
-	singleNamespace := strings.ToLower(os.Getenv("singleNamespace"))
-	if singleNamespace == "true" {
-		namespace := os.Getenv(consts.EnvYataiImageBuilderNamespace)
-		f.namespace = namespace
-	}
 	f.lock.Lock()
 	defer f.lock.Unlock()
 
