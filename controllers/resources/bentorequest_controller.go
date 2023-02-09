@@ -729,13 +729,6 @@ func MakeSureDockerConfigJSONSecret(ctx context.Context, kubeCli *kubernetes.Cli
 				err = nil
 			}
 		}
-	} else {
-		dockerConfigJSONSecret.Data[".dockerconfigjson"] = dockerConfigContent
-		_, err = secretsCli.Update(ctx, dockerConfigJSONSecret, metav1.UpdateOptions{})
-		if err != nil {
-			err = errors.Wrap(err, "update docker config secret")
-			return nil, err
-		}
 	}
 
 	return
